@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/home.dart';
- 
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter layout demo',
+      title: 'Demo Flutter UI',
       home: Home(testValue: " "),
     );
   }
