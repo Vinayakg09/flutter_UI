@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_first_flutter/bloc/internet_bloc/internet_bloc.dart';
-import 'package:my_first_flutter/bloc/internet_bloc/internet_state.dart';
-import 'package:my_first_flutter/screens/RouteScreens/Services.dart';
-import 'package:my_first_flutter/screens/loginpage2.dart';
+import 'package:flutter_application_1/screens/Reedem.dart';
+import 'package:flutter_application_1/screens/loginScreen.dart';
 
-class Task2 extends StatefulWidget {
+class Home extends StatefulWidget {
   final String testValue = '';
-  const Task2({super.key, required String testValue});
+  const Home({super.key, required String testValue});
 
   @override
-  State<Task2> createState() => _Task2State();
+  State<Home> createState() => _HomeState();
 }
 
-class _Task2State extends State<Task2> {
-  InternetBloc _bloc2 = InternetBloc();
+class _HomeState extends State<Home> {
   int _index = 0;
   Color _iconColor = Colors.lightBlueAccent;
   int tabIndex = 0;
@@ -44,6 +40,7 @@ class _Task2State extends State<Task2> {
       ),
       endDrawer: Drawer(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
                 onPressed: () => Navigator.push(
@@ -93,17 +90,6 @@ class _Task2State extends State<Task2> {
         onTap: (index) {
           setState(() {
             tabIndex = index;
-            if (index == 1) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => loginPage()),
-              );
-            } else if (index == 2) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Services()),
-              );
-            }
           });
         },
       ),
@@ -113,22 +99,6 @@ class _Task2State extends State<Task2> {
   body() {
     return Column(
       children: [
-        BlocListener<InternetBloc, InternetState>(
-          bloc: _bloc2,
-          listener: (context, state) {
-          if (State is InternetGainedState) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Connected!'),
-              backgroundColor: Colors.green,
-            ));
-          } else if (State is InternetLostState) {
-            print("Vinayank---------------->");
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('No Internet'),
-              backgroundColor: Colors.red,
-            ));
-          }
-        }),
         Padding(padding: EdgeInsets.all(10)),
         SizedBox(
           height: 50,
@@ -155,16 +125,7 @@ class _Task2State extends State<Task2> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ListView.builder(
-              //     shrinkWrap: true,
-              //     scrollDirection: Axis.horizontal,
-              //     itemCount: _icons.length,
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return Icon(Icons.abc_outlined);
-              //     }),
-              //const Padding(padding: EdgeInsets.all(25)),
               Container(
-                //margin: const EdgeInsets.symmetric(vertical: 20.0),
                 height: 40.0,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
@@ -214,12 +175,6 @@ class _Task2State extends State<Task2> {
                 'Top Offers',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              // const Align(
-              //   alignment: Alignment.bottomLeft,
-              // Container(
-              //   margin: EdgeInsets.fromLTRB(10, top, right, bottom),
-              // ),
-              // ),
               const Padding(padding: EdgeInsets.all(10)),
               ListView.builder(
                   physics: AlwaysScrollableScrollPhysics(),
@@ -245,9 +200,11 @@ class _Task2State extends State<Task2> {
                             width: 100,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/services',
-                                    (Route<dynamic> route) => false);
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Reedem()),
+                                    (route) => false);
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
@@ -269,28 +226,6 @@ class _Task2State extends State<Task2> {
                     );
                   }),
               Padding(padding: EdgeInsets.all(10)),
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(20),
-              //   child: Image.asset(
-              //     'images/zara_offers.jpeg',
-              //     width: 350,
-              //     fit: BoxFit.fill,
-              //   ),
-              // )
-              // Card(
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(20),
-              //   ),
-              //   child: Container(
-              //     //padding: EdgeInsets.all(20),
-              //     child: Column(children: [
-              //       ClipRRect(
-              //         borderRadius: BorderRadius.circular(20),
-              //         child: Image.asset('images/zara_offers.jpeg'),
-              //       )
-              //     ]),
-              //   ),
-              // ),
             ],
           ),
         ),
