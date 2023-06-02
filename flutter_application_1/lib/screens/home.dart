@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter_application_1/screens/Reedem.dart';
 import 'package:flutter_application_1/screens/loginScreen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   final String testValue = '';
@@ -29,25 +31,33 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         //bottomOpacity: 0.0,
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.blue),
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         title: const Text('Partners',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900)),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900)),
       ),
       endDrawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => loginPage()),
-                    ),
-                child: const Text('Login')),
+                style: ButtonStyle(),
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => loginPage()),
+                  );
+                  SharedPreferences pref =
+                      await SharedPreferences.getInstance();
+                  pref.remove("email");
+                  GoogleSignIn().signOut();
+                  setState(() {});
+                },
+                child: const Text('Logout')),
             ElevatedButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Text('Back')),
@@ -58,32 +68,32 @@ class _HomeState extends State<Home> {
         child: body(),
       ),
       bottomNavigationBar: ConvexAppBar(
-        activeColor: Colors.blue,
-        backgroundColor: Colors.white,
+        activeColor: Colors.cyanAccent,
+        backgroundColor: Colors.black,
         color: Colors.grey,
         items: [
           TabItem(
               icon: Icon(
                 Icons.home,
-                color: tabIndex == 0 ? Colors.white : Colors.blue,
+                color: tabIndex == 0 ? Colors.white : Colors.cyanAccent,
               ),
               title: 'Home'),
           TabItem(
               icon: Icon(
                 Icons.bed,
-                color: tabIndex == 1 ? Colors.white : Colors.blue,
+                color: tabIndex == 1 ? Colors.white : Colors.cyanAccent,
               ),
               title: 'Services'),
           TabItem(
               icon: Icon(
                 Icons.handshake,
-                color: tabIndex == 2 ? Colors.white : Colors.blue,
+                color: tabIndex == 2 ? Colors.white : Colors.cyanAccent,
               ),
               title: 'Partners'),
           TabItem(
               icon: Icon(
                 Icons.alarm,
-                color: tabIndex == 3 ? Colors.white : Colors.blue,
+                color: tabIndex == 3 ? Colors.white : Colors.cyanAccent,
               ),
               title: 'Activity'),
         ],
@@ -121,7 +131,7 @@ class _HomeState extends State<Home> {
             thickness: 15,
             color: Color.fromARGB(186, 227, 231, 233)),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
